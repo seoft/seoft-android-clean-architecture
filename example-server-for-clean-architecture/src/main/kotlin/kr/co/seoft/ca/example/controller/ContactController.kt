@@ -32,8 +32,8 @@ class ContactController {
         return contactService.getContact(id)
     }
 
-    @PostMapping("/contact/{id}")
-    fun addContact(createContact:CreateContact): ContactResponse {
+    @PostMapping("/contact")
+    fun addContact(@RequestBody createContact:CreateContact): ContactResponse {
         return contactService.addContact(createContact)
     }
 

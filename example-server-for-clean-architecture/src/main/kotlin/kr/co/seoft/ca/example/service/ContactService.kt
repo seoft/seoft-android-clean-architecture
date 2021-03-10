@@ -6,6 +6,7 @@ import kr.co.seoft.ca.example.entity.ContactsResponse
 import kr.co.seoft.ca.example.entity.CreateContact
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import kotlin.math.max
 import kotlin.math.min
 
 @Service
@@ -15,10 +16,8 @@ class ContactService {
 
     companion object {
         var idCount = 0L
-        val contactSimpleDataBase by lazy {
-            mutableListOf<ContactEntity>().apply {
-                addAll((0 until 200).map { ContactEntity.generateContact(idCount++) })
-            }
+        val contactSimpleDataBase = mutableListOf<ContactEntity>().apply {
+            addAll((0 until 200).map { ContactEntity.generateContact(idCount++) })
         }
 
         const val LOAD_COUNT = 30
@@ -28,11 +27,10 @@ class ContactService {
         val index = cursorId?.let { contactSimpleDataBase.indexOfFirst { it.id == cursorId } }
         val nextIndex = when (index) {
             -1 -> return ContactsResponse(emptyList())
-            null -> 0
-            else -> index + 1
+            null -> contactSimpleDataBase.size
+            else -> index - 2
         }
-        val size = contactSimpleDataBase.size
-        return ContactsResponse(contactSimpleDataBase.subList(min(nextIndex, size), min(nextIndex + LOAD_COUNT, size)))
+        return ContactsResponse(contactSimpleDataBase.subList(max(nextIndex - LOAD_COUNT, 0), max(nextIndex, 0)).asReversed())
     }
 
     fun getContact(id: Long): ContactResponse {

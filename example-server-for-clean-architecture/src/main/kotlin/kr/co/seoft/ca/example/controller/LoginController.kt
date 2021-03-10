@@ -4,6 +4,7 @@ import kr.co.seoft.ca.example.entity.LoginRequest
 import kr.co.seoft.ca.example.entity.LoginResponse
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -20,7 +21,7 @@ class LoginController {
     )
 
     @PostMapping("/login")
-    fun requestLogin(loginRequest: LoginRequest): LoginResponse {
+    fun requestLogin(@RequestBody loginRequest: LoginRequest): LoginResponse {
         return LoginResponse(loginData[loginRequest.id] == loginRequest.password)
     }
 

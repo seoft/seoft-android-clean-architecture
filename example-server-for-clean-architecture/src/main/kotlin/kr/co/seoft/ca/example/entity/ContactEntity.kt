@@ -10,7 +10,7 @@ data class ContactEntity(val id: Long, val name: String, val email: String) {
                     id,
                     UUID.randomUUID().toString().replace("-", "").substring(0, 5),
                     UUID.randomUUID().toString().replace("-", "").let {
-                        "${it.substring(0, Random.nextInt(5, 8))}@${it.substring(0, Random.nextInt(4, 8))}.com"
+                        "${it.substring(0, Random.nextInt(5, 8))}@${it.reversed().substring(0, Random.nextInt(4, 8))}.com"
                     }
             )
         }
