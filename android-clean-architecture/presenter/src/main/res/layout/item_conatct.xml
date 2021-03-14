@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="contact"
+            type="kr.co.seoft.ca.domain.entity.ContactEntity" />
+
+        <variable
+            name="onContactListener"
+            type="kr.co.seoft.ca.ui.contact.OnContactListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginBottom="1dp"
+        android:background="#E6F7FF"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:onClick="@{()->onContactListener.onContactClick(contact)}"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="10dp"
+        app:onLongClick="@{()->onContactListener.onContactLongClick(contact)}">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{contact.name + `(` + contact.id + `)`}"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="this_is_name(10)" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{`email : ` + contact.email}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:text="email : asdf@asdf.com" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="@{()->onContactListener.onContactBookmarkClick(contact)}"
+            android:padding="10dp"
+            android:src="@drawable/ic_round_favorite_24"
+            android:tint="@{contact.bookmark ? @color/on : @color/off }"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
